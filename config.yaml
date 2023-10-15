@@ -1,0 +1,913 @@
+# Database Configuration
+database:
+  mysql:
+    driverName:
+    host:
+    port:
+    user:
+    password:
+    schema:
+    database:
+
+
+log:
+  filename: ./test.log
+  log_level: DEBUG
+  max_size: 10
+  max_backups: 7
+  max_age: 60
+  compress: yes
+  encoding: console
+
+# Model List Configuration
+module:
+  - name: XGBoost
+    description: XGBoost The idea of combining multiple weak learners into a strong classifier improves the model's predictive ability
+  - name: decision_tree
+    description: The main advantage of decision trees is that they are easy to understand and interpret, and can handle continuous and discrete data, missing values, and other issues. However, due to the susceptibility of decision trees to overfitting and underfitting issues, attention should be paid to controlling the complexity and pruning techniques of the tree when using it.
+  - name: kMeans
+    description: K-means is a commonly used unsupervised learning algorithm used to partition a set of data into K different clusters. It determines the cluster to which each sample point belongs by minimizing the Euclidean distance between the sample point and the center point of the cluster to which it belongs.
+#  - name: CNN
+#    path: /root/noir/cnn
+
+ipfs:
+  url:
+  auth:
+
+contract:
+  contract_function: verify
+  decision_tree+Acute_Inflammations:
+    address:
+  decision_tree+Breast_Cancer:
+    address:
+  decision_tree+Chronic_Kidney_Disease:
+    address:
+  decision_tree+Heart_Disease:
+    address:
+  decision_tree+Heart_Failure_Clinical_Records:
+    address:
+  decision_tree+Lymphography:
+    address:
+  decision_tree+Parkinsons:
+    address:
+  kMeans+Inflammations:
+    address:
+  kMeans+Breast_Cancer:
+    address:
+  kMeans+Chronic_Kidney_Disease:
+    address:
+  kMeans+Heart_Disease:
+    address:
+  kMeans+Heart_Failure_Clinical_Records:
+    address:
+  kMeans+Lymphography:
+    address:
+  kMeans+Parkinsons:
+    address:
+  XGBoost+Inflammations:
+    address:
+  XGBoost+Breast_Cancer:
+    address:
+  XGBoost+Chronic_Kidney_Disease:
+    address:
+  XGBoost+Heart_Disease:
+    address:
+  XGBoost+Heart_Failure_Clinical_Records:
+    address:
+  XGBoost+Lymphography:
+    address:
+  XGBoost+Parkinsons:
+    address:
+
+
+# Disease category configuration
+disease:
+  Acute Inflammations:
+    description:
+    inputs:
+      - name: temperature
+        description: Temperature of patient { 35C-42C }
+        index: 0
+        input method: input
+        select:
+          - celsius: 0
+      - name: Occurrence of nausea
+        description: Occurrence of nausea { yes, no }
+        index: 1
+        input method: select
+        select:
+          - yes: 1
+          - no: 0
+      - name: Lumbar pain
+        description: Lumbar pain { yes, no }
+        index: 2
+        input method: select
+        select:
+          - yes: 1
+          - no: 0
+      - name: Urine pushing
+        description: Urine pushing (continuous need for urination) { yes, no }
+        index: 3
+        input method: select
+        select:
+          - yes: 1
+          - no: 0
+      - name: Micturition pains
+        description: Micturition pains { yes, no }
+        index: 4
+        input method: select
+        select:
+          - yes: 1
+          - no: 0
+      - name: Burning of urethra, itch, swelling of urethra outlet
+        description: Burning of urethra, itch, swelling of urethra outlet { yes, no }
+        index: 5
+        input method: select
+        select:
+          - yes: 1
+          - no: 0
+    output:
+      description:
+      result:
+        - 0: normal
+        - 1: Inflammation of urinary bladder
+        - 2: Nephritis of renal pelvis origin
+        - 3: Inflammation of urinary bladder and Nephritis of renal pelvis origin
+
+  Breast Cancer:
+    description:
+    inputs:
+      - name: age
+        description:
+        index: 0
+        input method: select
+        select:
+          - 10-19: 1
+          - 20-29: 2
+          - 30-39: 3
+          - 40-49: 4
+          - 50-59: 5
+          - 60-69: 6
+          - 70-79: 7
+          - 80-89: 8
+          - 90-99: 9
+      - name: menopause
+        description:
+        index: 1
+        input method: select
+        select:
+          - lt40: 0
+          - ge40: 1
+          - premeno: 2
+      - name: tumor-size
+        description:
+        index: 2
+        input method: select
+        select:
+          - 0-4: 0
+          - 5-9: 1
+          - 10-14: 2
+          - 15-19: 3
+          - 20-24: 4
+          - 25-29: 5
+          - 30-34: 6
+          - 35-39: 7
+          - 40-44: 8
+          - 45-49: 9
+          - 50-54: 10
+          - 55-59: 11
+      - name: inv-nodes
+        description:
+        index: 3
+        input method: select
+        select:
+          - 0-2: 0
+          - 3-5: 1
+          - 6-8: 2
+          - 9-11: 3
+          - 12-14: 4
+          - 15-17: 5
+          - 18-20: 6
+          - 21-23: 7
+          - 24-26: 8
+          - 27-29: 9
+          - 30-32: 10
+          - 33-35: 11
+          - 36-39: 12
+      - name: node-caps
+        description:
+        index: 4
+        input method: select
+        select:
+          - yes: 0
+          - no: 1
+      - name: deg-malig
+        description:
+        index: 5
+        input method: select
+        select:
+          - 1: 0
+          - 2: 1
+          - 3: 2
+      - name: breast
+        description:
+        index: 6
+        input method: select
+        select:
+          - left: 0
+          - right: 1
+      - name: breast-quad
+        description:
+        index: 7
+        input method: select
+        select:
+          - left-up: 0
+          - left-low: 1
+          - right-up: 2
+          - right-low: 3
+          - center: 4
+      - name: irradiat
+        description:
+        index: 8
+        input method: select
+        select:
+          - yes: 0
+          - no: 1
+    output:
+      description: Class
+      result:
+       - no-recurrence-events: 0
+       - recurrence-events: 1
+
+  Chronic Kidney Disease:
+    description:
+    inputs:
+      - name: age
+        description: age in years
+        index: 0
+        input method: input
+        select:
+          - years old: 0
+      - name: Blood Pressure
+        description: Blood Pressure(numerical) bp in mm/Hg
+        index: 1
+        input method: input
+        select:
+          - mm/Hg: 0
+      - name: Specific Gravity
+        description: Specific Gravity(nominal)
+        index: 2
+        input method: select
+        select:
+          - 1.005: 1.005
+          - 1.010: 1.010
+          - 1.015: 1.015
+          - 1.020: 1.020
+          - 1.025: 1.005
+      - name: Alibumin
+        description: Albumin(nominal)
+        index: 3
+        input method: select
+        select:
+          - 0: 0
+          - 1: 1
+          - 2: 2
+          - 3: 3
+          - 4: 4
+          - 5: 5
+      - name: Sugar
+        description:
+        index: 4
+        input method: select
+        select:
+          - 0: 0
+          - 1: 1
+          - 2: 2
+          - 3: 3
+          - 4: 4
+          - 5: 5
+      - name: Read Blood Cells
+        description:
+        index: 5
+        input method: select
+        select:
+          - normal: 0
+          - abnormal: 1
+      - name: Pus Cell
+        description:
+        index: 6
+        input method: select
+        select:
+          - normal: 0
+          - abnormal: 1
+      - name: Pus Cell clumps
+        description:
+        index: 7
+        input method: select
+        select:
+          - not present: 0
+          - present: 1
+      - name: Bacteria
+        description:
+        index: 8
+        input method: select
+        select:
+          - not present: 0
+          - present: 1
+      - name: Blood Glucose Random
+        description:
+        index: 9
+        input method: input
+        select:
+          - mgs/dl: 0
+      - name: Blood Urea
+        description:
+        index: 10
+        input method: input
+        select:
+          - mgs/dl: 0
+      - name: Serum Creatinine
+        description:
+        index: 11
+        input method: input
+        select:
+          - mgs/dl: 0
+      - name: Sodium
+        description:
+        index: 12
+        input method: input
+        select:
+          - mEq/L: 0
+      - name: Potassium
+        description:
+        index: 13
+        input method: input
+        select:
+          - mEq/L: 0
+      - name: Hemoglobin
+        description:
+        index: 14
+        input method: input
+        select:
+          - gms: 0
+      - name: Packed Cell Volume
+        description:
+        index: 15
+        input method: input
+        select:
+          - numerical: 0
+      - name: White Blood Cell Count
+        description:
+        index: 16
+        input method: input
+        select:
+          - cells/cumm: 0
+      - name: Red Blood Cell Count
+        description:
+        index: 17
+        input method: input
+        select:
+          - millions/cmm: 0
+      - name: Hypertension
+        description:
+        index: 18
+        input method: select
+        select:
+          - yes: 0
+          - no: 1
+      - name: Diabetes Mellitus
+        description:
+        index: 19
+        input method: select
+        select:
+          - yes: 0
+          - no: 1
+      - name: Coronary Artery Disease
+        description:
+        index: 20
+        input method: select
+        select:
+          - yes: 0
+          - no: 1
+      - name: Appetite
+        description:
+        index: 21
+        input method: select
+        select:
+          - poor: 0
+          - good: 1
+      - name: Pedal Edema
+        description:
+        index: 22
+        input method: select
+        select:
+          - yes: 0
+          - no: 1
+      - name: Anemia
+        description:
+        index: 23
+        input method: select
+        select:
+          - yes: 0
+          - no: 1
+    output:
+      description: Class
+      result:
+        - not chronic kidney disease: 0
+        - chronic kidney disease: 1
+
+  Heart Disease:
+    description:
+    inputs:
+      - name: age
+        description: age in years
+        index: 0
+        input method: input
+        select:
+          - years old: 0
+      - name: sex
+        description:  sex
+        index: 1
+        input method: select
+        select:
+          - female: 0
+          - male: 1
+      - name: chest pain type
+        description: chest pain type
+        index: 2
+        input method: select
+        select:
+          - typical angina: 1
+          - atypical angina: 2
+          - non-anginal pain: 3
+          - asymptomatic: 4
+      - name: trestbps
+        description: resting blood pressure (in mm Hg on admission to the hospital)
+        index: 3
+        input method: input
+        select:
+          - mm/Hg: 0
+      - name: cholestoral
+        description: serum cholestoral in mg/dl
+        index: 4
+        input method: input
+        select:
+          - mg/dl: 0
+      - name: fasting blood sugar
+        description: fasting blood sugar > 120 mg/dl
+        index: 5
+        input method: select
+        select:
+          - yes: 1
+          - no: 0
+      - name: resting electrocardiographic
+        description: resting electrocardiographic results
+        index: 6
+        input method: select
+        select:
+          - normal: 0
+          - having ST-T wave abnormality: 1
+          - showing probable or definite left ventricular hypertrophy by Estes' criteria: 2
+      - name: thalach
+        description: maximum heart rate achieved
+        index: 7
+        input method: input
+        select:
+          - beats per minute: 0
+      - name: exercise induced angina
+        description: exercise induced angina
+        index: 8
+        input method: select
+        select:
+          - no: 0
+          - yes: 1
+      - name: oldpeak
+        description: ST depression induced by exercise relative to rest
+        index: 9
+        input method: input
+        select:
+          - 0: 0
+      - name: slope
+        description: the slope of the peak exercise ST segment
+        index: 10
+        input method: select
+        select:
+          - upsloping: 1
+          - flat: 2
+          - downsloping: 3
+      - name: ca
+        description: number of major vessels (0-3) colored by flourosopy
+        index: 11
+        input method: select
+        select:
+          - 0: 0
+          - 1: 1
+          - 2: 2
+          - 3: 3
+      - name: thal
+        description:
+        index: 12
+        input method: select
+        select:
+          - normal: 3
+          - fixed defect: 6
+          - reversable defect: 7
+    output:
+      description: angiographic disease status
+      result:
+        - "< 50% diameter narrowing": 0
+        - "> 50% diameter narrowing": 1
+
+  Heart Failure Clinical Records:
+    description:
+    inputs:
+      - name: age
+        description: age of the patient
+        index: 0
+        input method: input
+        select:
+          - years old: 0
+      - name: anaemia
+        description: decrease of red blood cells or hemoglobin
+        index: 1
+        input method: select
+        select:
+          - no: 0
+          - yes: 1
+      - name: creatinine_phosphokinase (CPK)
+        description: level of the CPK enzyme in the blood (mcg/L)
+        index: 2
+        input method: input
+        select:
+          - mcg/L: 0
+      - name: diabetes
+        description: if the patient has diabetes
+        index: 3
+        input method: select
+        select:
+          - no: 0
+          - yes: 1
+      - name: ejection fraction
+        description: percentage of blood leaving the heart at each contraction (percentage)
+        index: 4
+        input method: input
+        select:
+          - "%": 0
+      - name: high blood pressure
+        description:
+        index: 5
+        input method: select
+        select:
+          - no: 0
+          - yes: 1
+      - name: platelets
+        description: platelets in the blood (kiloplatelets/mL)
+        index: 6
+        input method: input
+        select:
+          - kiloplatelets/mL: 0
+      - name: serum creatinine
+        description: level of serum creatinine in the blood (mg/dL)
+        index: 7
+        input method: input
+        select:
+          - mg/dL: 0
+      - name: serum sodium
+        description: level of serum sodium in the blood (mEq/L)
+        index: 8
+        input method: input
+        select:
+          - mEq/L: 0
+      - name: sex
+        description: woman or man
+        index: 9
+        input method: select
+        select:
+          - female: 0
+          - male: 1
+      - name: smoking
+        description: if the patient smokes or not (boolean)
+        index: 10
+        input method: select
+        select:
+          - no: 0
+          - yes: 1
+      - name: time
+        description: follow-up period (days)
+        index: 11
+        input method: input
+        select:
+          - days: 0
+    output:
+      description: death_event
+      result:
+        - no: 0
+        - yes: 1
+
+  Lymphography:
+    description:
+    inputs:
+      - name: lymphatics
+        description: normal, arched, deformed, displaced
+        index: 0
+        inputs method: select
+        select:
+          - normal: 1
+          - arched: 2
+          - deformed: 3
+          - displaced: 4
+      - name: block of affere
+        description: no, yes
+        index: 1
+        inputs method: select
+        select:
+          - no: 1
+          - yes: 2
+      - name: bl of lymph c
+        description: no, yes
+        index: 2
+        inputs method: select
+        select:
+          - no: 1
+          - yes: 2
+      - name: bl of lymph s
+        description: no, yes
+        index: 3
+        inputs method: select
+        select:
+          - no: 1
+          - yes: 2
+      - name: by pass
+        description: no, yes
+        index: 4
+        inputs method: select
+        select:
+          - no: 1
+          - yes: 2
+      - name: extravasates
+        description: no, yes
+        index: 5
+        inputs method: select
+        select:
+          - no: 1
+          - yes: 2
+      - name: regeneration of
+        description: no, yes
+        index: 6
+        inputs method: select
+        select:
+          - no: 1
+          - yes: 2
+      - name: early uptake in
+        description: no, yes
+        index: 7
+        inputs method: select
+        select:
+          - no: 1
+          - yes: 2
+      - name: lym nodes dimin
+        description: 0-3
+        index: 8
+        inputs method: select
+        select:
+          - 0: 0
+          - 1: 1
+          - 2: 2
+          - 3: 3
+      - name: lym nodes enlar
+        description: 1-4
+        index: 9
+        inputs method: select
+        select:
+          - 1: 1
+          - 2: 2
+          - 3: 3
+          - 4: 4
+      - name: changes in lym
+        description: bean, oval, round
+        index: 10
+        inputs method: select
+        select:
+          - bean: 1
+          - oval: 2
+          - round: 3
+      - name: defect in node
+        description: no, lacunar, lac. marginal, lac. central
+        index: 11
+        inputs method: select
+        select:
+          - no: 1
+          - lacunar: 2
+          - lac. marginal: 3
+          - lac. central: 4
+      - name: changes in node
+        description: no, lacunar, lac. margin, lac. central
+        index: 12
+        inputs method: select
+        select:
+          - no: 1
+          - lacunar: 2
+          - lac. marginal: 3
+          - lac. central: 4
+      - name: changes in stru
+        description: no, grainy, drop-like, coarse, diluted, reticular, stripped, faint,
+        index: 13
+        inputs method: select
+        select:
+          - no: 1
+          - grainy: 2
+          - drop-like: 3
+          - coarse: 4
+          - diluted: 5
+          - reticular: 6
+          - stripped: 7
+          - faint: 8
+      - name: special forms
+        description: no, chalices, vesicles
+        index: 14
+        inputs method: select
+        select:
+          - no: 1
+          - chalices: 2
+          - vesicles: 3
+      - name: dislocation of
+        description: no, yes
+        index: 15
+        inputs method: select
+        select:
+          - no: 1
+          - yes: 2
+      - name: exclusion of no
+        description: no, yes
+        index: 16
+        inputs method: select
+        select:
+          - no: 1
+          - yes: 2
+      - name: no. of nodes in
+        description:
+        index: 17
+        inputs method: select
+        select:
+          - 0: 0-9
+          - 1: 10-19
+          - 2: 20-29
+          - 3: 30-39
+          - 4: 40-49
+          - 5: 50-59
+          - 6: 60-69
+          - 7: ">=70"
+    output:
+      description: class
+      result:
+        - normal find: 1
+        - metastases: 2
+        - malign lymph: 3
+        - fibrosis: 4
+
+  Parkinsons:
+    description:
+    inputs:
+      - name: name
+        description: ASCII subject name and recording number
+        index: 0
+        input method: input
+        select:
+          - number: 0
+      - name: "MDVP:Fo(Hz)"
+        description: Average vocal fundamental frequency
+        index: 1
+        input method: input
+        select:
+          - Hz: 0
+      - name: "MDVP:Fhi(Hz)"
+        description: Maximum vocal fundamental frequency
+        index: 2
+        input method: input
+        select:
+          - Hz: 0
+      - name: "MDVP:Flo(Hz)"
+        description: Minimum vocal fundamental frequency
+        index: 3
+        input method: input
+        select:
+          - Hz: 0
+      - name: MDVP-Jitter(%)
+        description:
+        index: 4
+        input method: input
+        select:
+          - "%": 0
+      - name: MDVP:Jitter(Abs)
+        description: Several measures of variation in fundamental frequency
+        index: 5
+        input method: input
+        select:
+          - "%": 0
+      - name: MDVP:RAP
+        description: Several measures of variation in fundamental frequency
+        index: 6
+        input method: input
+        select:
+          - "%": 0
+      - name: MDVP:PPQ
+        description: Several measures of variation in fundamental frequency
+        index: 7
+        input method: input
+        select:
+          - "%": 0
+      - name: Jitter:DDP
+        description: Several measures of variation in fundamental frequency
+        index: 8
+        input method: input
+        select:
+          - "%": 0
+      - name: MDVP:Shimmer
+        description: Several measures of variation in amplitude
+        index: 9
+        input method: input
+        select:
+          - "%": 0
+      - name: MDVP:Shimmer(dB)
+        description: Several measures of variation in amplitude
+        index: 10
+        input method: input
+        select:
+          - "%": 0
+      - name: Shimmer:APQ3
+        description: Several measures of variation in amplitude
+        index: 11
+        input method: input
+        select:
+          - "%": 0
+      - name: Shimmer:APQ5
+        description: Several measures of variation in amplitude
+        index: 12
+        input method: input
+        select:
+          - "%": 0
+      - name: MDVP:APQ
+        description: Several measures of variation in amplitude
+        index: 13
+        input method: input
+        select:
+          - "%": 0
+      - name: Shimmer:DDA
+        description: Several measures of variation in amplitude
+        index: 14
+        input method: input
+        select:
+          - "%": 0
+      - name: NHR
+        description: Two measures of ratio of noise to tonal components in the voice
+        index: 15
+        input method: input
+        select:
+          - "%": 0
+      - name: HNR
+        description: Two measures of ratio of noise to tonal components in the voice
+        index: 16
+        input method: input
+        select:
+          - "%": 0
+      - name: RPDE
+        description: Two nonlinear dynamical complexity measures
+        index: 17
+        input method: input
+        select:
+          - bits: 0
+      - name: DFA
+        description: Signal fractal scaling exponent
+        index: 18
+        input method: input
+        select:
+          - "α": 0
+      - name: spread1
+        description: Three nonlinear measures of fundamental frequency variation
+        index: 19
+        input method: input
+        select:
+          - Hz: 0
+      - name: spread2
+        description: Three nonlinear measures of fundamental frequency variation
+        index: 20
+        input method: input
+        select:
+          - Hz: 0
+      - name: D2
+        description: Two nonlinear dynamical complexity measures
+        index: 21
+        input method: input
+        select:
+          - bits: 0
+      - name: PPE
+        description: Three nonlinear measures of fundamental frequency variation
+        index: 22
+        input method: input
+        select:
+          - Hz: 0
+    output:
+      description: status Health status of the subject
+      result:
+        - 0: healthy
+        - 1: Parkinson's

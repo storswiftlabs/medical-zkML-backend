@@ -1,0 +1,783 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "medical-zkML",
+    "description": "",
+    "version": "1.0.0"
+  },
+  "tags": [
+    {
+      "name": "diseases"
+    },
+    {
+      "name": "operator"
+    },
+    {
+      "name": "user"
+    }
+  ],
+  "paths": {
+    "/api/diseases/disease_info": {
+      "get": {
+        "summary": "疾病信息",
+        "x-apifox-folder": "diseases",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "diseases"
+        ],
+        "parameters": [
+          {
+            "name": "Disease",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "icon": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "icon",
+                    "description",
+                    "name"
+                  ],
+                  "x-apifox-orders": [
+                    "icon",
+                    "description",
+                    "name"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/3258948/apis/api-108809768-run"
+      }
+    },
+    "/api/diseases/diseases": {
+      "get": {
+        "summary": "疾病种类",
+        "x-apifox-folder": "diseases",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "diseases"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "diseases": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "diseases"
+                  ],
+                  "x-apifox-orders": [
+                    "diseases"
+                  ],
+                  "x-apifox-ignore-properties": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/3258948/apis/api-108818989-run"
+      }
+    },
+    "/api/operator/operator_list": {
+      "get": {
+        "summary": "算子列表",
+        "x-apifox-folder": "operator",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "operator"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/3258948/apis/api-110179299-run"
+      }
+    },
+    "/api/operator/disease_prediction": {
+      "post": {
+        "summary": "疾病预测",
+        "x-apifox-folder": "operator",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "operator"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "user": {
+                    "type": "string"
+                  },
+                  "name": {
+                    "type": "string"
+                  },
+                  "module": {
+                    "type": "string"
+                  },
+                  "inputs": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "index": {
+                          "type": "integer"
+                        },
+                        "select": {
+                          "type": "string"
+                        }
+                      },
+                      "x-apifox-orders": [
+                        "name",
+                        "index",
+                        "select"
+                      ],
+                      "x-apifox-ignore-properties": []
+                    }
+                  }
+                },
+                "required": [
+                  "user",
+                  "name",
+                  "module",
+                  "inputs"
+                ],
+                "x-apifox-orders": [
+                  "user",
+                  "name",
+                  "module",
+                  "inputs"
+                ],
+                "x-apifox-ignore-properties": []
+              },
+              "example": {
+                "user": "0x01f5BB073e893d334FF9b0e239939982c124AF97",
+                "name": "Acute_Inflammations",
+                "module": "decision_tree",
+                "inputs": [
+                  {
+                    "name": "temperature",
+                    "index": 0,
+                    "select": "35.5"
+                  },
+                  {
+                    "name": "oon",
+                    "index": 1,
+                    "select": "0"
+                  },
+                  {
+                    "name": "lp",
+                    "index": 2,
+                    "select": "1"
+                  },
+                  {
+                    "name": "up",
+                    "index": 3,
+                    "select": "0"
+                  },
+                  {
+                    "name": "mp",
+                    "index": 4,
+                    "select": "0"
+                  },
+                  {
+                    "name": "biso",
+                    "index": 5,
+                    "select": "0"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/3258948/apis/api-110179321-run"
+      }
+    },
+    "/api/operator/recommend": {
+      "post": {
+        "summary": "疾病建议",
+        "x-apifox-folder": "operator",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "operator"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "disease": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "disease"
+                ],
+                "x-apifox-orders": [
+                  "disease"
+                ],
+                "x-apifox-ignore-properties": []
+              },
+              "example": {
+                "disease": "Acute_Inflammations"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/3258948/apis/api-110179503-run"
+      }
+    },
+    "/api/operator/verify_prediction_results": {
+      "post": {
+        "summary": "验证预测结果",
+        "x-apifox-folder": "operator",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "operator"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "user": {
+                    "type": "string"
+                  },
+                  "id": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "user",
+                  "id"
+                ],
+                "x-apifox-orders": [
+                  "user",
+                  "id"
+                ],
+                "x-apifox-ignore-properties": []
+              },
+              "example": {
+                "user": "0x01f5BB073e893d334FF9b0e239939982c124AF97",
+                "id": 25
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/3258948/apis/api-110182475-run"
+      }
+    },
+    "/api/user/register": {
+      "post": {
+        "summary": "用户注册",
+        "x-apifox-folder": "user",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "user"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "address": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "address"
+                ],
+                "x-apifox-orders": [
+                  "address"
+                ],
+                "x-apifox-ignore-properties": []
+              },
+              "example": {
+                "address": "0x01f5BB073e893d334FF9b0e239939982c124AF97"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/3258948/apis/api-110183021-run"
+      }
+    },
+    "/api/operator/predicting_outcomes": {
+      "post": {
+        "summary": "预测结果",
+        "x-apifox-folder": "operator",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "operator"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "user": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "user"
+                ],
+                "x-apifox-orders": [
+                  "user"
+                ],
+                "x-apifox-ignore-properties": []
+              },
+              "example": {
+                "user": "0x01f5BB073e893d334FF9b0e239939982c124AF97"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/3258948/apis/api-111011265-run"
+      }
+    },
+    "/api/user/article_collection": {
+      "post": {
+        "summary": "文章收藏",
+        "x-apifox-folder": "user",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "user"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "user": {
+                    "type": "string"
+                  },
+                  "url": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "user",
+                  "url"
+                ],
+                "x-apifox-orders": [
+                  "user",
+                  "url"
+                ],
+                "x-apifox-ignore-properties": []
+              },
+              "example": {
+                "user": "0x01f5BB073e893d334FF9b0e239939982c124AF97",
+                "url": "https://medium.com/@dririsbell/what-is-inflammation-f51900ddeab1"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/3258948/apis/api-112721591-run"
+      }
+    },
+    "/api/user/get_user": {
+      "post": {
+        "summary": "查询用户是否已注册",
+        "x-apifox-folder": "user",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "user"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "user": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "user"
+                ],
+                "x-apifox-orders": [
+                  "user"
+                ],
+                "x-apifox-ignore-properties": []
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/3258948/apis/api-112751552-run"
+      }
+    },
+    "/api/operator/article": {
+      "post": {
+        "summary": "文章",
+        "x-apifox-folder": "operator",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "operator"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "user": {
+                    "type": "string"
+                  },
+                  "diseases": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "user",
+                  "diseases"
+                ],
+                "x-apifox-orders": [
+                  "user",
+                  "diseases"
+                ],
+                "x-apifox-ignore-properties": []
+              },
+              "example": {
+                "diseases": [
+                  "Acute_Inflammations"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/3258948/apis/api-113327545-run"
+      }
+    },
+    "/api/user/article_collection_check": {
+      "post": {
+        "summary": "文章收藏检查",
+        "x-apifox-folder": "user",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "user"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "user": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "user"
+                ],
+                "x-apifox-orders": [
+                  "user"
+                ],
+                "x-apifox-ignore-properties": []
+              },
+              "example": {
+                "user": "0x01f5BB073e893d334FF9b0e239939982c124AF97"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/3258948/apis/api-115145019-run"
+      }
+    },
+    "/api/operator/DeletePredictedRecord": {
+      "post": {
+        "summary": "删除预测记录",
+        "x-apifox-folder": "operator",
+        "x-apifox-status": "developing",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "operator"
+        ],
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "user": {
+                    "type": "string"
+                  },
+                  "ids": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                "required": [
+                  "user",
+                  "ids"
+                ],
+                "x-apifox-orders": [
+                  "user",
+                  "ids"
+                ],
+                "x-apifox-ignore-properties": []
+              },
+              "example": {
+                "user": "0x01f5BB073e893d334FF9b0e239939982c124AF97",
+                "ids": [
+                  3,
+                  26,
+                  27
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {},
+                  "x-apifox-ignore-properties": [],
+                  "x-apifox-orders": []
+                }
+              }
+            }
+          }
+        },
+        "x-run-in-apifox": "https://www.apifox.cn/web/project/3258948/apis/api-115163822-run"
+      }
+    }
+  },
+  "components": {
+    "schemas": {}
+  }
+}
