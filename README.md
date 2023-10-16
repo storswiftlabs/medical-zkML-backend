@@ -1,6 +1,6 @@
 # medical-zkML-backend
 
-This repository contains all code for the Tailwind Traders Backend.
+This repository contains all code for the medical zkML backend.
 
 ## Quick Start
 Configure database connections, IPFS information, and contract addresses in the configuration file.
@@ -23,7 +23,8 @@ ipfs:
   auth:
 ```
 
-contract:
+contract:       
+The validator's contract is stored in the 'internal/plugin/abi' path of the project, deployed to the chain, and the contract address is filled in the corresponding 'address:' mapping
 ```yaml
 contract:
   contract_function: verify
