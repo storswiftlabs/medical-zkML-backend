@@ -82,7 +82,7 @@ func (d *Disease) ParameterCheck(info *module.PredictionPremise) error {
 			return input.Select[i].Value.(int) < input.Select[j].Value.(int)
 		})
 
-		choose, err := strconv.Atoi(info.Inputs[index].Select)
+		choose, err := strconv.Atoi(info.Inputs[index].SelectValue)
 		if err != nil {
 			return err
 		}
