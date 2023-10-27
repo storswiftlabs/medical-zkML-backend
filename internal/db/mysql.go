@@ -70,7 +70,7 @@ func SavePredictedResult(user, disease, model, result, proof string, id uint) er
 
 func GetPredictedList(user string) ([]module.PredictedResult, error) {
 	var pr []module.PredictedResult
-	result := engine.Model(&module.RecordPrediction{}).Where("user = ?", user).Order("id DESC").Select("id, disease, status, inputs, message, end_time, output").Find(&pr)
+	result := engine.Model(&module.RecordPrediction{}).Where("user = ?", user).Order("id DESC").Select("id, disease, module, status, inputs, message, start_time, end_time, output").Find(&pr)
 	if result.Error != nil {
 		return nil, result.Error
 	}

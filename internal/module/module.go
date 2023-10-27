@@ -18,6 +18,8 @@ type Input struct {
 	Name        string
 	Description string
 	Index       int
+	Regular     string
+	Warn        string
 	InputMethod string
 	Select      []KeyValue
 }
@@ -49,9 +51,10 @@ type PredictionPremise struct {
 	Name   string `json:"name"`
 	Module string `json:"module"`
 	Inputs []struct {
-		Name   string `json:"name"`
-		Index  int    `json:"index"`
-		Select string `json:"select"`
+		Name        string `json:"name"`
+		Index       int    `json:"index"`
+		SelectKey   string `json:"select-key"`
+		SelectValue string `json:"select-value"`
 	} `json:"inputs"`
 }
 
@@ -74,11 +77,12 @@ type RecordPrediction struct {
 	User       string
 	Disease    string
 	Module     string
-	Inputs     string
+	Inputs     string `gorm:"type:text"`
 	Normalized string
 	Quantized  string
 	Scale      string
 	ZeroPoint  string
+	StartTime  int64 `gorm:"start_time"`
 	EndTime    int64 `gorm:"end_time"`
 	Output     int
 }
@@ -106,13 +110,15 @@ type GetPredictedResult struct {
 }
 
 type PredictedResult struct {
-	ID      uint
-	Disease string
-	EndTime uint `gorm:"end_time"`
-	Status  Status
-	Inputs  string
-	Message string
-	Output  string
+	ID        uint
+	Disease   string
+	Module    string
+	StartTime int64 `gorm:"start_time"`
+	EndTime   int64 `gorm:"end_time"`
+	Status    Status
+	Inputs    string
+	Message   string
+	Output    string
 }
 
 type UserPredictionValidation struct {

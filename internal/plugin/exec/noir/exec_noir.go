@@ -7,12 +7,14 @@ import (
 	"go.uber.org/zap"
 	"medical-zkml-backend/internal/db"
 	m "medical-zkml-backend/internal/module"
+	"medical-zkml-backend/pkg/config"
 	"medical-zkml-backend/pkg/utils"
 	"os"
 	"os/exec"
 	"path"
 	"runtime"
 	"strings"
+	"time"
 )
 
 var rootPath string
@@ -40,16 +42,37 @@ func InitNoir(path, dir string) *ExecNoir {
 	return Noir
 }
 
+func (n *ExecNoir) NoirVersionCheck() {
+	cmd := exec.Command(n.root, "--version")
+	output, err := cmd.Output()
+	if err != nil {
+		panic(err)
+	}
+	if strings.Split(strings.TrimSpace(string(output)), " ")[1] != config.GetConfig().GetString("nargo.version") {
+		fmt.Printf("Please use nargo version 0.10.5")
+		os.Exit(1)
+	}
+}
+
+func (n *ExecNoir) PathCheck() {
+	circuitPath := fmt.Sprintf("%s/%s", rootPath, n.dir)
+	_, err := os.Stat(circuitPath)
+	if os.IsNotExist(err) {
+		if err = os.MkdirAll(circuitPath, os.ModePerm); err != nil {
+			fmt.Printf("Could not create circuit: %s", err)
+			os.Exit(2)
+		}
+	}
+}
+
 func (n *ExecNoir) prediction(path, disease, module string, quantized *m.Quantized) error {
 
 	if err := n.circuitInjection(path, disease, module); err != nil {
 		return err
 	}
 
-	if module == "kMeans" {
-		if err := n.quantitativeInjection(path); err != nil {
-			return err
-		}
+	if err := n.quantitativeInjection(path); err != nil {
+		return err
 	}
 
 	// Information injection
@@ -70,6 +93,11 @@ func (n *ExecNoir) prediction(path, disease, module string, quantized *m.Quantiz
 }
 
 func (n *ExecNoir) DiseasePrediction(user string, recordPrediction *m.RecordPrediction, disease, module string, quantized *m.Quantized) {
+
+	zap.L().Info(msg, zap.String("Status", "start"))
+
+	module = strings.ReplaceAll(strings.ReplaceAll(module, " ", "_"), "-", "_")
+	disease = strings.ReplaceAll(strings.ReplaceAll(disease, " ", "_"), "-", "_")
 	project, err := n.createProject(recordPrediction.ID, disease, module)
 	if err != nil {
 		// Update the status of the database
@@ -119,6 +147,7 @@ func (n *ExecNoir) DiseasePrediction(user string, recordPrediction *m.RecordPred
 	// end
 	recordPrediction.Status = m.Complete
 	recordPrediction.Output = utils.Hexadecimal2Decimal(result)
+	recordPrediction.EndTime = time.Now().Unix()
 	_ = db.RecordPredict(recordPrediction)
 
 	_ = n.cleanProject(project)
@@ -164,7 +193,7 @@ func (n *ExecNoir) cleanProject(project string) error {
 
 func (n *ExecNoir) getProof(project string) (string, error) {
 
-	file, err := os.Open(fmt.Sprintf("%s/%s/%s", n.dir, project, "proofs/p.proof"))
+	file, err := os.Open(fmt.Sprintf("%s/%s/proofs/p.proof", n.dir, project))
 	if err != nil {
 		zap.L().Error(msg, zap.Error(err))
 		zap.L().Error(msg, zap.Error(errors.New(fmt.Sprintf("Task %s execution failed", project))))
@@ -219,8 +248,8 @@ func (n *ExecNoir) inputsToProver(inputs []string, project, scale, zeroPoint str
 
 func (n *ExecNoir) createProject(id uint, disease, module string) (string, error) {
 	// nargo new module_id
-	zap.L().Info(msg, zap.String("Status", "start"))
-	newProject := fmt.Sprintf("%s_%s_%d", module, strings.ReplaceAll(disease, " ", "_"), id)
+
+	newProject := fmt.Sprintf("%s_%s_%d", module, disease, id)
 	cmd := exec.Command(n.root, "new", newProject)
 	cmd.Dir = n.dir
 	if err := cmd.Run(); err != nil {
@@ -233,7 +262,7 @@ func (n *ExecNoir) createProject(id uint, disease, module string) (string, error
 }
 
 func (n *ExecNoir) circuitInjection(path, disease, module string) error {
-	content, err := os.ReadFile(fmt.Sprintf("%s/internal/plugin/abi/%s/%s.nr", rootPath, module, strings.ReplaceAll(disease, " ", "_")))
+	content, err := os.ReadFile(fmt.Sprintf("%s/internal/plugin/abi/%s/%s.nr", rootPath, module, disease))
 	if err != nil {
 		zap.L().Error(msg, zap.Error(err))
 		zap.L().Error(msg, zap.Error(errors.New(fmt.Sprintf("Task %s execution failed", path))))
@@ -250,18 +279,20 @@ func (n *ExecNoir) circuitInjection(path, disease, module string) error {
 }
 
 func (n *ExecNoir) quantitativeInjection(path string) error {
-	content, err := os.ReadFile(fmt.Sprintf("%s/internal/plugin/abi/quantization_arithmetic/post_quantization_operation.nr", rootPath))
+	file, err := os.OpenFile(fmt.Sprintf("%s/internal/plugin/circuit/%s/Nargo.toml", rootPath, path), os.O_RDWR|os.O_APPEND, 0664)
 	if err != nil {
 		zap.L().Error(msg, zap.Error(err))
 		zap.L().Error(msg, zap.Error(errors.New(fmt.Sprintf("Task %s execution failed", path))))
 		return err
 	}
+	defer file.Close()
 
-	if err := os.WriteFile(fmt.Sprintf("%s/internal/plugin/circuit/%s/src/post_quantization_operation.nr", rootPath, path), content, 0644); err != nil {
-		zap.L().Error(msg, zap.Error(err))
-		zap.L().Error(msg, zap.Error(errors.New(fmt.Sprintf("Task %s execution failed", path))))
-		return err
-	}
+	newLine := "\nquantization_arithmetic = { path = \"../../abi/quantization_arithmetic\"}\n"
+
+	writer := bufio.NewWriter(file)
+	writer.WriteString(newLine)
+	writer.Flush()
+
 	zap.L().Info(msg, zap.String(fmt.Sprintf("Task %s quantitative injection", path), "success"))
 	return nil
 }

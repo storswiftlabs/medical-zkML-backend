@@ -14,7 +14,10 @@ var dp DiseasePrediction
 func Register(name string) {
 	switch name {
 	case "Local Noir":
-		dp = DiseasePrediction(noir.InitNoir("nargo", "internal/plugin/circuit"))
+		local := noir.InitNoir("nargo", "internal/plugin/circuit")
+		local.NoirVersionCheck()
+		local.PathCheck()
+		dp = DiseasePrediction(local)
 	}
 }
 

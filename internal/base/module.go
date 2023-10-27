@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"github.com/spf13/viper"
 	"go.uber.org/zap"
+	"golang.org/x/text/cases"
+	"golang.org/x/text/language"
 	"medical-zkml-backend/internal/module"
 	"reflect"
 	"strings"
@@ -62,6 +64,8 @@ func inject(disease *viper.Viper, info *module.DiseaseInfo) {
 			Name:        interface2string(param["name"]),
 			Description: interface2string(param["description"]),
 			Index:       param["index"].(int),
+			Regular:     interface2string(param["regular"]),
+			Warn:        interface2string(param["warn"]),
 			InputMethod: interface2string(param["input method"]),
 			Select:      interface2keyvalue(param["select"]),
 		})
@@ -80,8 +84,7 @@ func sublist(meet *viper.Viper) (list []string) {
 		return nil
 	}
 	for _, key := range allKeys {
-		parts := strings.Split(key, ".")
-		disease := parts[0]
+		disease := cases.Title(language.Dutch).String(strings.Split(key, ".")[0])
 		if len(list) == 0 {
 			list = append(list, disease)
 			continue

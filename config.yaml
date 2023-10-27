@@ -11,24 +11,25 @@ database:
 
 
 log:
-  filename: ./test.log
-  log_level: DEBUG
-  max_size: 10
-  max_backups: 7
-  max_age: 60
-  compress: yes
-  encoding: console
+  filename:
+  log_level:
+  max_size:
+  max_backups:
+  max_age:
+  compress:
+  encoding:
+
+nargo:
+  version: 0.7.1
 
 # Model List Configuration
 module:
   - name: XGBoost
     description: XGBoost The idea of combining multiple weak learners into a strong classifier improves the model's predictive ability
-  - name: decision_tree
+  - name: Decision tree
     description: The main advantage of decision trees is that they are easy to understand and interpret, and can handle continuous and discrete data, missing values, and other issues. However, due to the susceptibility of decision trees to overfitting and underfitting issues, attention should be paid to controlling the complexity and pruning techniques of the tree when using it.
-  - name: kMeans
+  - name: K-Means
     description: K-means is a commonly used unsupervised learning algorithm used to partition a set of data into K different clusters. It determines the cluster to which each sample point belongs by minimizing the Euclidean distance between the sample point and the center point of the cluster to which it belongs.
-#  - name: CNN
-#    path: /root/noir/cnn
 
 ipfs:
   url:
@@ -36,35 +37,39 @@ ipfs:
 
 contract:
   contract_function: verify
-  decision_tree+Acute_Inflammations:
+  Decision_tree+Acute_Inflammations:
     address:
-  decision_tree+Breast_Cancer:
+  Decision_tree+Breast_Cancer:
     address:
-  decision_tree+Chronic_Kidney_Disease:
+  Decision_tree+Chronic_Kidney_Disease:
     address:
-  decision_tree+Heart_Disease:
+  Decision_tree+Heart_Disease:
     address:
-  decision_tree+Heart_Failure_Clinical_Records:
+  Decision_tree+Heart_Failure_Clinical_Records:
     address:
-  decision_tree+Lymphography:
+  Decision_tree+Lymphography:
     address:
-  decision_tree+Parkinsons:
+  #  Decision_tree+Liver_Disorders:
+  #    address: 0x4FC6c18f90C3263e94166dDe759fE79292d036De
+  Decision_tree+Parkinsons:
     address:
-  kMeans+Inflammations:
+  #  Decision_tree+Primary_Tumor:
+  #    address: 0x8cA44Eb29EE5cE881537cD6D436520d2828371e9
+  K_Means+Acute_Inflammations:
     address:
-  kMeans+Breast_Cancer:
+  K_Means+Breast_Cancer:
     address:
-  kMeans+Chronic_Kidney_Disease:
+  K_Means+Chronic_Kidney_Disease:
     address:
-  kMeans+Heart_Disease:
+  K_Means+Heart_Disease:
     address:
-  kMeans+Heart_Failure_Clinical_Records:
+  K_Means+Heart_Failure_Clinical_Records:
     address:
-  kMeans+Lymphography:
+  K_Means+Lymphography:
     address:
-  kMeans+Parkinsons:
+  K_Means+Parkinsons:
     address:
-  XGBoost+Inflammations:
+  XGBoost+Acute_Inflammations:
     address:
   XGBoost+Breast_Cancer:
     address:
@@ -80,14 +85,25 @@ contract:
     address:
 
 
+
 # Disease category configuration
 disease:
   Acute Inflammations:
-    description:
+    description: "Acute inflammation is a vital defense mechanism of the body in response to injury or infection. It is characterized by a series of complex biological processes that aim to eliminate harmful stimuli and initiate the healing process. When tissue is damaged, immune cells and chemical mediators are swiftly mobilized to the affected area.
+
+The hallmark signs of acute inflammation include redness (rubor), heat (calor), swelling (tumor), pain (dolor), and loss of function. These symptoms are a result of increased blood flow, enhanced vascular permeability, and the recruitment of white blood cells to the site of inflammation. The purpose of these responses is to deliver important immune cells, such as neutrophils and macrophages, to the injured area to neutralize invading pathogens and clear away debris.
+
+During acute inflammation, pro-inflammatory mediators, such as cytokines and chemokines, are released to orchestrate the immune response. These molecules attract immune cells to the site of injury and activate them to perform their protective functions. Inflammation is an intricate process that involves a delicate balance between initiating the immune response and preventing excessive tissue damage.
+
+While acute inflammation is essential for tissue repair and pathogen clearance, uncontrolled or prolonged inflammation can lead to tissue destruction and chronic diseases. Therefore, it is crucial to promptly identify the underlying cause of inflammation and provide appropriate medical intervention to manage the inflammatory response effectively.
+
+In conclusion, acute inflammation serves as a critical defense mechanism that mobilizes the body's immune system to combat injury and infection. Understanding the complex mechanisms involved in acute inflammation is crucial for developing effective treatments and interventions to optimize the healing process and restore tissue function."
     inputs:
-      - name: temperature
+      - name: Temperature
         description: Temperature of patient { 35C-42C }
         index: 0
+        regular: ^(3[4-9]|[4-9][0-9]|46(\.[0-5])?)$
+        warn: Please enter a number between 34 and 46.5
         input method: input
         select:
           - celsius: 0
@@ -129,15 +145,23 @@ disease:
     output:
       description:
       result:
-        - 0: normal
+        - 0: Normal
         - 1: Inflammation of urinary bladder
         - 2: Nephritis of renal pelvis origin
         - 3: Inflammation of urinary bladder and Nephritis of renal pelvis origin
 
   Breast Cancer:
-    description:
+    description: "Breast cancer is a type of cancer that begins in the cells of the breast. It occurs when abnormal cells grow out of control and form a tumor. Breast cancer is the most common cancer among women worldwide, but it can also occur in men.
+
+There are several types of breast cancer, including ductal carcinoma in situ (DCIS), invasive ductal carcinoma (IDC), and invasive lobular carcinoma (ILC). DCIS is a non-invasive form of breast cancer that originates in the milk ducts and is confined to the inside of the ducts. On the other hand, IDC and ILC are invasive forms of breast cancer that have spread outside of the milk ducts or lobules and into surrounding breast tissue.
+
+The risk factors for breast cancer include age, gender, family history, genetic mutations, reproductive factors, obesity, and exposure to certain chemicals and radiation. Symptoms of breast cancer may include a lump or thickening in the breast tissue, changes in breast size or shape, nipple discharge, breast pain, or skin dimpling.
+
+Diagnosis of breast cancer typically involves a combination of imaging tests, such as mammography and ultrasound, and a biopsy to confirm the presence of cancerous cells. Treatment options for breast cancer depend on the type and stage of cancer, as well as the patient's overall health and preferences. Treatment may include surgery, radiation therapy, chemotherapy, hormone therapy, or targeted therapy.
+
+Breast cancer can be a devastating diagnosis, but early detection and effective treatment can lead to excellent outcomes. Regular breast self-exams, clinical breast exams, and mammograms are recommended for women at average risk for developing breast cancer. For women at high risk, additional screening and preventive measures may be recommended."
     inputs:
-      - name: age
+      - name: Age
         description:
         index: 0
         input method: select
@@ -151,7 +175,7 @@ disease:
           - 70-79: 7
           - 80-89: 8
           - 90-99: 9
-      - name: menopause
+      - name: Menopause
         description:
         index: 1
         input method: select
@@ -159,7 +183,7 @@ disease:
           - lt40: 0
           - ge40: 1
           - premeno: 2
-      - name: tumor-size
+      - name: Tumor size
         description:
         index: 2
         input method: select
@@ -176,7 +200,7 @@ disease:
           - 45-49: 9
           - 50-54: 10
           - 55-59: 11
-      - name: inv-nodes
+      - name: Inv nodes
         description:
         index: 3
         input method: select
@@ -194,14 +218,14 @@ disease:
           - 30-32: 10
           - 33-35: 11
           - 36-39: 12
-      - name: node-caps
+      - name: Node caps
         description:
         index: 4
         input method: select
         select:
           - yes: 0
           - no: 1
-      - name: deg-malig
+      - name: Deg-malig
         description:
         index: 5
         input method: select
@@ -209,14 +233,14 @@ disease:
           - 1: 0
           - 2: 1
           - 3: 2
-      - name: breast
+      - name: Breast
         description:
         index: 6
         input method: select
         select:
           - left: 0
           - right: 1
-      - name: breast-quad
+      - name: Breast quad
         description:
         index: 7
         input method: select
@@ -226,7 +250,7 @@ disease:
           - right-up: 2
           - right-low: 3
           - center: 4
-      - name: irradiat
+      - name: Irradiat
         description:
         index: 8
         input method: select
@@ -236,25 +260,39 @@ disease:
     output:
       description: Class
       result:
-       - no-recurrence-events: 0
-       - recurrence-events: 1
+        - 0: No recurrence events
+        - 1: Recurrence events
 
   Chronic Kidney Disease:
-    description:
+    description: "Chronic kidney disease (CKD) is a progressive condition in which the kidneys gradually lose function over time. It is a serious and common health problem that can lead to end-stage renal disease (ESRD) if left untreated.
+
+The most common causes of CKD include diabetes, high blood pressure, glomerulonephritis, interstitial nephritis, polycystic kidney disease, and urinary tract obstruction. CKD progresses slowly and often does not produce symptoms until it reaches an advanced stage. Symptoms may include fatigue, nausea, vomiting, loss of appetite, muscle cramps, and swelling of the legs and feet.
+
+Diagnosis of CKD typically involves blood and urine tests to measure kidney function and identify any abnormalities. Treatment for CKD focuses on slowing or stopping the progression of the disease. This may involve lifestyle changes such as reducing salt intake, quitting smoking, and exercising regularly, as well as medication to control blood pressure and blood sugar levels and prevent complications.
+
+In cases of advanced CKD, dialysis or kidney transplantation may be necessary. Dialysis involves using a machine to remove waste products and excess fluids from the blood, while kidney transplantation involves surgically placing a healthy kidney from a donor into the patient's body.
+
+Preventing CKD involves managing risk factors such as diabetes and high blood pressure, maintaining a healthy weight, and avoiding exposure to environmental toxins. Regular check-ups with a healthcare provider can help detect and treat any kidney problems early on.
+
+In conclusion, chronic kidney disease is a serious condition that requires close monitoring and management to prevent complications and preserve kidney function. Early diagnosis and intervention are essential in improving outcomes for people with CKD."
     inputs:
-      - name: age
+      - name: Age
         description: age in years
         index: 0
+        regular:
+        warn:
         input method: input
         select:
           - years old: 0
-      - name: Blood Pressure
+      - name: Blood pressure
         description: Blood Pressure(numerical) bp in mm/Hg
         index: 1
+        regular:
+        warn:
         input method: input
         select:
           - mm/Hg: 0
-      - name: Specific Gravity
+      - name: Specific gravity
         description: Specific Gravity(nominal)
         index: 2
         input method: select
@@ -263,7 +301,7 @@ disease:
           - 1.010: 1.010
           - 1.015: 1.015
           - 1.020: 1.020
-          - 1.025: 1.005
+          - 1.025: 1.025
       - name: Alibumin
         description: Albumin(nominal)
         index: 3
@@ -286,21 +324,21 @@ disease:
           - 3: 3
           - 4: 4
           - 5: 5
-      - name: Read Blood Cells
+      - name: Read blood cells
         description:
         index: 5
         input method: select
         select:
           - normal: 0
           - abnormal: 1
-      - name: Pus Cell
+      - name: Pus cell
         description:
         index: 6
         input method: select
         select:
           - normal: 0
           - abnormal: 1
-      - name: Pus Cell clumps
+      - name: Pus cell clumps
         description:
         index: 7
         input method: select
@@ -314,57 +352,75 @@ disease:
         select:
           - not present: 0
           - present: 1
-      - name: Blood Glucose Random
+      - name: Blood glucose random
         description:
         index: 9
+        regular:
+        warn:
         input method: input
         select:
           - mgs/dl: 0
-      - name: Blood Urea
+      - name: Blood urea
         description:
         index: 10
+        regular:
+        warn:
         input method: input
         select:
           - mgs/dl: 0
-      - name: Serum Creatinine
+      - name: Serum creatinine
         description:
         index: 11
+        regular:
+        warn:
         input method: input
         select:
           - mgs/dl: 0
       - name: Sodium
         description:
         index: 12
+        regular:
+        warn:
         input method: input
         select:
           - mEq/L: 0
       - name: Potassium
         description:
         index: 13
+        regular:
+        warn:
         input method: input
         select:
           - mEq/L: 0
       - name: Hemoglobin
         description:
         index: 14
+        regular:
+        warn:
         input method: input
         select:
           - gms: 0
-      - name: Packed Cell Volume
+      - name: Packed cell volume
         description:
         index: 15
+        regular:
+        warn:
         input method: input
         select:
           - numerical: 0
-      - name: White Blood Cell Count
+      - name: White blood cell count
         description:
         index: 16
+        regular:
+        warn:
         input method: input
         select:
           - cells/cumm: 0
-      - name: Red Blood Cell Count
+      - name: Red blood cell count
         description:
         index: 17
+        regular:
+        warn:
         input method: input
         select:
           - millions/cmm: 0
@@ -375,14 +431,14 @@ disease:
         select:
           - yes: 0
           - no: 1
-      - name: Diabetes Mellitus
+      - name: Diabetes mellitus
         description:
         index: 19
         input method: select
         select:
           - yes: 0
           - no: 1
-      - name: Coronary Artery Disease
+      - name: Coronary artery disease
         description:
         index: 20
         input method: select
@@ -396,7 +452,7 @@ disease:
         select:
           - poor: 0
           - good: 1
-      - name: Pedal Edema
+      - name: Pedal edema
         description:
         index: 22
         input method: select
@@ -413,26 +469,42 @@ disease:
     output:
       description: Class
       result:
-        - not chronic kidney disease: 0
-        - chronic kidney disease: 1
+        - 0: Not chronic kidney disease
+        - 1: Chronic kidney disease
 
   Heart Disease:
-    description:
+    description: "Heart disease, also known as cardiovascular disease, refers to a range of conditions that affect the heart and blood vessels. It is a leading cause of death worldwide and includes conditions such as coronary artery disease, heart failure, arrhythmias, and valvular heart disease.
+
+Coronary artery disease (CAD) is the most common form of heart disease and occurs when the blood vessels that supply oxygen-rich blood to the heart muscle become narrowed or blocked by a buildup of plaque. This can lead to chest pain or discomfort, shortness of breath, and even heart attacks.
+
+Heart failure is another prevalent form of heart disease, where the heart is unable to pump blood effectively. This can cause fluid buildup in the lungs, leading to symptoms like fatigue, swelling in the legs and ankles, and difficulty breathing.
+
+Arrhythmias are abnormal heart rhythms that may cause the heart to beat too fast, too slow, or irregularly. This can disrupt the heart's pumping ability and lead to symptoms such as palpitations, dizziness, and fainting.
+
+Valvular heart disease occurs when the valves in the heart do not function properly, either becoming narrowed or leaking. This can force the heart to work harder, leading to symptoms like fatigue, shortness of breath, and chest discomfort.
+
+Risk factors for heart disease include high blood pressure, high cholesterol levels, smoking, obesity, diabetes, a sedentary lifestyle, and a family history of heart disease. Prevention and management of heart disease involve making lifestyle changes, such as adopting a healthy diet, exercising regularly, quitting smoking, managing stress, and taking prescribed medications.
+
+Early detection and treatment are crucial in preventing complications and improving outcomes for individuals with heart disease. Regular check-ups, screenings, and timely medical intervention are essential in managing heart health.
+
+In conclusion, heart disease encompasses various conditions that affect the heart and blood vessels. It is a significant global health concern, but with appropriate lifestyle modifications and medical care, its impact can be reduced, and individuals can lead healthier lives."
     inputs:
-      - name: age
+      - name: Age
         description: age in years
         index: 0
+        regular:
+        warn:
         input method: input
         select:
           - years old: 0
-      - name: sex
+      - name: Sex
         description:  sex
         index: 1
         input method: select
         select:
           - female: 0
           - male: 1
-      - name: chest pain type
+      - name: Chest pain type
         description: chest pain type
         index: 2
         input method: select
@@ -441,26 +513,30 @@ disease:
           - atypical angina: 2
           - non-anginal pain: 3
           - asymptomatic: 4
-      - name: trestbps
+      - name: Trestbps
         description: resting blood pressure (in mm Hg on admission to the hospital)
         index: 3
+        regular:
+        warn:
         input method: input
         select:
           - mm/Hg: 0
-      - name: cholestoral
+      - name: Cholestoral
         description: serum cholestoral in mg/dl
         index: 4
+        regular:
+        warn:
         input method: input
         select:
           - mg/dl: 0
-      - name: fasting blood sugar
+      - name: Fasting blood sugar
         description: fasting blood sugar > 120 mg/dl
         index: 5
         input method: select
         select:
           - yes: 1
           - no: 0
-      - name: resting electrocardiographic
+      - name: Resting electrocardiographic
         description: resting electrocardiographic results
         index: 6
         input method: select
@@ -468,26 +544,30 @@ disease:
           - normal: 0
           - having ST-T wave abnormality: 1
           - showing probable or definite left ventricular hypertrophy by Estes' criteria: 2
-      - name: thalach
+      - name: Thalach
         description: maximum heart rate achieved
         index: 7
+        regular:
+        warn:
         input method: input
         select:
           - beats per minute: 0
-      - name: exercise induced angina
+      - name: Exercise induced angina
         description: exercise induced angina
         index: 8
         input method: select
         select:
           - no: 0
           - yes: 1
-      - name: oldpeak
+      - name: ST depression induced by exercise relative to rest
         description: ST depression induced by exercise relative to rest
         index: 9
+        regular:
+        warn:
         input method: input
         select:
           - 0: 0
-      - name: slope
+      - name: Slope
         description: the slope of the peak exercise ST segment
         index: 10
         input method: select
@@ -495,7 +575,7 @@ disease:
           - upsloping: 1
           - flat: 2
           - downsloping: 3
-      - name: ca
+      - name: Number of major vessels colored by flourosopy
         description: number of major vessels (0-3) colored by flourosopy
         index: 11
         input method: select
@@ -504,7 +584,7 @@ disease:
           - 1: 1
           - 2: 2
           - 3: 3
-      - name: thal
+      - name: Thalassemia
         description:
         index: 12
         input method: select
@@ -513,101 +593,138 @@ disease:
           - fixed defect: 6
           - reversable defect: 7
     output:
-      description: angiographic disease status
+      description: Angiographic disease status
       result:
-        - "< 50% diameter narrowing": 0
-        - "> 50% diameter narrowing": 1
+        - 0: "0%"
+        - 1: "25%"
+        - 2: "50%"
+        - 3: "75%"
+        - 4: "100%"
 
   Heart Failure Clinical Records:
-    description:
+    description: "Heart failure clinical records are comprehensive documents that contain important information about patients diagnosed with heart failure. These records serve as a vital tool for healthcare professionals to track and manage the condition of heart failure patients.
+
+The clinical records typically include a range of details, such as the patient's medical history, physical examination findings, diagnostic test results (e.g., echocardiograms, electrocardiograms), medication regimens, and any surgical or interventional procedures performed. These records also document the patient's symptoms, functional status, and response to treatment.
+
+Furthermore, heart failure clinical records may incorporate information about the patient's risk factors for heart failure, such as hypertension, diabetes, or coronary artery disease. They may also include data on lifestyle modifications, dietary recommendations, and exercise plans tailored to each patient's specific needs.
+
+Healthcare providers use these records to monitor the progression of heart failure, assess treatment effectiveness, and make informed decisions regarding adjustments to medication dosages or interventions. The records provide a historical overview of the patient's condition, facilitating continuity of care and enabling healthcare professionals to identify trends or patterns in the patient's health status.
+
+Heart failure clinical records play a crucial role in facilitating communication among healthcare providers involved in the patient's care, ensuring that all relevant information is shared accurately and efficiently. They also serve as a legal document, providing a record of the care provided and serving as a reference for future medical evaluations or legal proceedings.
+
+Overall, heart failure clinical records are essential tools that support the delivery of high-quality care to patients with heart failure. They enable healthcare professionals to provide personalized treatment plans, closely monitor patients' progress, and optimize management strategies to improve patients' quality of life and long-term outcomes."
     inputs:
-      - name: age
+      - name: Age
         description: age of the patient
         index: 0
+        regular:
+        warn:
         input method: input
         select:
           - years old: 0
-      - name: anaemia
+      - name: Anaemia
         description: decrease of red blood cells or hemoglobin
         index: 1
         input method: select
         select:
           - no: 0
           - yes: 1
-      - name: creatinine_phosphokinase (CPK)
+      - name: Creatinine phosphokinase
         description: level of the CPK enzyme in the blood (mcg/L)
         index: 2
+        regular:
+        warn:
         input method: input
         select:
           - mcg/L: 0
-      - name: diabetes
+      - name: Diabetes
         description: if the patient has diabetes
         index: 3
         input method: select
         select:
           - no: 0
           - yes: 1
-      - name: ejection fraction
+      - name: Ejection fraction
         description: percentage of blood leaving the heart at each contraction (percentage)
         index: 4
+        regular:
+        warn:
         input method: input
         select:
           - "%": 0
-      - name: high blood pressure
+      - name: High blood pressure
         description:
         index: 5
         input method: select
         select:
           - no: 0
           - yes: 1
-      - name: platelets
+      - name: Platelets
         description: platelets in the blood (kiloplatelets/mL)
         index: 6
+        regular:
+        warn:
         input method: input
         select:
           - kiloplatelets/mL: 0
-      - name: serum creatinine
+      - name: Serum creatinine
         description: level of serum creatinine in the blood (mg/dL)
         index: 7
+        regular:
+        warn:
         input method: input
         select:
           - mg/dL: 0
-      - name: serum sodium
+      - name: Serum sodium
         description: level of serum sodium in the blood (mEq/L)
         index: 8
+        regular:
+        warn:
         input method: input
         select:
           - mEq/L: 0
-      - name: sex
+      - name: Sex
         description: woman or man
         index: 9
         input method: select
         select:
           - female: 0
           - male: 1
-      - name: smoking
+      - name: Smoking
         description: if the patient smokes or not (boolean)
         index: 10
         input method: select
         select:
           - no: 0
           - yes: 1
-      - name: time
+      - name: Time
         description: follow-up period (days)
         index: 11
+        regular:
+        warn:
         input method: input
         select:
           - days: 0
     output:
-      description: death_event
+      description: Death event
       result:
-        - no: 0
-        - yes: 1
+        - 0: no
+        - 1: yes
 
   Lymphography:
-    description:
+    description: "Lymphography is a diagnostic imaging technique used to visualize the lymphatic system in the human body. It involves the injection of a contrast agent into the lymphatic vessels, followed by the capture of X-ray images or the use of other imaging modalities to track the flow of the contrast agent through the lymphatic system.
+
+During the procedure, a radiopaque dye or radioactive tracer is injected into the lymphatic vessels, typically in the hand or foot. The contrast agent then travels through the lymphatic vessels, highlighting the structure and function of the lymphatic system. This allows healthcare professionals to identify any abnormalities or blockages in the lymphatic pathways.
+
+Lymphography can be performed using various imaging techniques, including X-ray lymphography, computed tomography (CT) lymphography, magnetic resonance imaging (MRI) lymphography, or even nuclear medicine lymphoscintigraphy. Each modality offers unique advantages and may be selected based on the specific clinical question and the patient's condition.
+
+The information obtained from lymphography can aid in the diagnosis and staging of lymphatic disorders, such as lymphedema, lymphoma, or lymphatic malformations. It can also help guide surgical interventions, such as lymph node biopsies or lymphatic mapping for cancer staging.
+
+Lymphography is generally considered safe, although there may be some minor risks associated with the injection of contrast agents, such as allergic reactions or localized swelling. The procedure is typically performed by a trained radiologist or nuclear medicine specialist in a hospital or imaging center.
+
+In summary, lymphography is a valuable diagnostic tool that allows healthcare professionals to visualize and assess the lymphatic system. By providing detailed information about lymphatic flow and identifying any abnormalities, it helps in the diagnosis, treatment planning, and management of various lymphatic disorders."
     inputs:
-      - name: lymphatics
+      - name: Lymphatics
         description: normal, arched, deformed, displaced
         index: 0
         inputs method: select
@@ -616,56 +733,56 @@ disease:
           - arched: 2
           - deformed: 3
           - displaced: 4
-      - name: block of affere
+      - name: Block of affere
         description: no, yes
         index: 1
         inputs method: select
         select:
           - no: 1
           - yes: 2
-      - name: bl of lymph c
+      - name: Bl of lymph c
         description: no, yes
         index: 2
         inputs method: select
         select:
           - no: 1
           - yes: 2
-      - name: bl of lymph s
+      - name: Bl of lymph s
         description: no, yes
         index: 3
         inputs method: select
         select:
           - no: 1
           - yes: 2
-      - name: by pass
+      - name: By pass
         description: no, yes
         index: 4
         inputs method: select
         select:
           - no: 1
           - yes: 2
-      - name: extravasates
+      - name: Extravasates
         description: no, yes
         index: 5
         inputs method: select
         select:
           - no: 1
           - yes: 2
-      - name: regeneration of
+      - name: Regeneration of
         description: no, yes
         index: 6
         inputs method: select
         select:
           - no: 1
           - yes: 2
-      - name: early uptake in
+      - name: Early uptake in
         description: no, yes
         index: 7
         inputs method: select
         select:
           - no: 1
           - yes: 2
-      - name: lym nodes dimin
+      - name: Lym nodes dimin
         description: 0-3
         index: 8
         inputs method: select
@@ -674,7 +791,7 @@ disease:
           - 1: 1
           - 2: 2
           - 3: 3
-      - name: lym nodes enlar
+      - name: Lym nodes enlar
         description: 1-4
         index: 9
         inputs method: select
@@ -683,7 +800,7 @@ disease:
           - 2: 2
           - 3: 3
           - 4: 4
-      - name: changes in lym
+      - name: Changes in lym
         description: bean, oval, round
         index: 10
         inputs method: select
@@ -691,16 +808,16 @@ disease:
           - bean: 1
           - oval: 2
           - round: 3
-      - name: defect in node
+      - name: Defect in node
         description: no, lacunar, lac. marginal, lac. central
         index: 11
         inputs method: select
         select:
           - no: 1
           - lacunar: 2
-          - lac. marginal: 3
-          - lac. central: 4
-      - name: changes in node
+          - lac  marginal: 3
+          - lac  central: 4
+      - name: Changes in node
         description: no, lacunar, lac. margin, lac. central
         index: 12
         inputs method: select
@@ -709,7 +826,7 @@ disease:
           - lacunar: 2
           - lac. marginal: 3
           - lac. central: 4
-      - name: changes in stru
+      - name: Changes in stru
         description: no, grainy, drop-like, coarse, diluted, reticular, stripped, faint,
         index: 13
         inputs method: select
@@ -722,7 +839,7 @@ disease:
           - reticular: 6
           - stripped: 7
           - faint: 8
-      - name: special forms
+      - name: Special forms
         description: no, chalices, vesicles
         index: 14
         inputs method: select
@@ -730,184 +847,222 @@ disease:
           - no: 1
           - chalices: 2
           - vesicles: 3
-      - name: dislocation of
+      - name: Dislocation of
         description: no, yes
         index: 15
         inputs method: select
         select:
           - no: 1
           - yes: 2
-      - name: exclusion of no
+      - name: Exclusion of no
         description: no, yes
         index: 16
         inputs method: select
         select:
           - no: 1
           - yes: 2
-      - name: no. of nodes in
+      - name: No of nodes in
         description:
         index: 17
         inputs method: select
         select:
-          - 0: 0-9
-          - 1: 10-19
-          - 2: 20-29
-          - 3: 30-39
-          - 4: 40-49
-          - 5: 50-59
-          - 6: 60-69
-          - 7: ">=70"
+          - 0-9: 0
+          - 10-19: 1
+          - 20-29: 2
+          - 30-39: 3
+          - 40-49: 4
+          - 50-59: 5
+          - 60-69: 6
+          - ">=70": 7
     output:
-      description: class
+      description: Class
       result:
-        - normal find: 1
-        - metastases: 2
-        - malign lymph: 3
-        - fibrosis: 4
+        - 0: normal find
+        - 1: metastases
+        - 2: malign lymph
+        - 3: fibrosis
 
   Parkinsons:
-    description:
+    description: "Parkinson's disease is a chronic and progressive neurological disorder that affects movement. It is caused by the death of dopamine-producing cells in a region of the brain called the substantia nigra. Symptoms of Parkinson's disease include tremors, stiffness, and slowness of movement, as well as balance and coordination problems. As the disease progresses, individuals with Parkinson's may also experience cognitive changes such as memory problems and difficulty with decision-making. While there is no cure for Parkinson's disease, there are treatments available to manage symptoms and improve quality of life for those living with the disease."
     inputs:
-      - name: name
-        description: ASCII subject name and recording number
-        index: 0
-        input method: input
-        select:
-          - number: 0
       - name: "MDVP:Fo(Hz)"
         description: Average vocal fundamental frequency
-        index: 1
+        index: 0
+        regular:
+        warn:
         input method: input
         select:
           - Hz: 0
       - name: "MDVP:Fhi(Hz)"
         description: Maximum vocal fundamental frequency
-        index: 2
+        index: 1
+        regular:
+        warn:
         input method: input
         select:
           - Hz: 0
       - name: "MDVP:Flo(Hz)"
         description: Minimum vocal fundamental frequency
-        index: 3
+        index: 2
+        regular:
+        warn:
         input method: input
         select:
           - Hz: 0
-      - name: MDVP-Jitter(%)
+      - name: "MDVP-Jitter"
         description:
-        index: 4
+        index: 3
+        regular:
+        warn:
         input method: input
         select:
           - "%": 0
-      - name: MDVP:Jitter(Abs)
+      - name: "MDVP:Jitter(Abs)"
+        description: Several measures of variation in fundamental frequency
+        index: 4
+        regular:
+        warn:
+        input method: input
+        select:
+          - "%": 0
+      - name: "MDVP:RAP"
         description: Several measures of variation in fundamental frequency
         index: 5
+        regular:
+        warn:
         input method: input
         select:
           - "%": 0
-      - name: MDVP:RAP
+      - name: "MDVP:PPQ"
         description: Several measures of variation in fundamental frequency
         index: 6
+        regular:
+        warn:
         input method: input
         select:
           - "%": 0
-      - name: MDVP:PPQ
+      - name: "Jitter:DDP"
         description: Several measures of variation in fundamental frequency
         index: 7
+        regular:
+        warn:
         input method: input
         select:
           - "%": 0
-      - name: Jitter:DDP
-        description: Several measures of variation in fundamental frequency
+      - name: "MDVP:Shimmer"
+        description: Several measures of variation in amplitude
         index: 8
+        regular:
+        warn:
         input method: input
         select:
           - "%": 0
-      - name: MDVP:Shimmer
+      - name: "MDVP:Shimmer(dB)"
         description: Several measures of variation in amplitude
         index: 9
+        regular:
+        warn:
         input method: input
         select:
           - "%": 0
-      - name: MDVP:Shimmer(dB)
+      - name: "Shimmer:APQ3"
         description: Several measures of variation in amplitude
         index: 10
+        regular:
+        warn:
         input method: input
         select:
           - "%": 0
-      - name: Shimmer:APQ3
+      - name: "Shimmer:APQ5"
         description: Several measures of variation in amplitude
         index: 11
+        regular:
+        warn:
         input method: input
         select:
           - "%": 0
-      - name: Shimmer:APQ5
+      - name: "MDVP:APQ"
         description: Several measures of variation in amplitude
         index: 12
+        regular:
+        warn:
         input method: input
         select:
           - "%": 0
-      - name: MDVP:APQ
+      - name: "Shimmer:DDA"
         description: Several measures of variation in amplitude
         index: 13
-        input method: input
-        select:
-          - "%": 0
-      - name: Shimmer:DDA
-        description: Several measures of variation in amplitude
-        index: 14
+        regular:
+        warn:
         input method: input
         select:
           - "%": 0
       - name: NHR
         description: Two measures of ratio of noise to tonal components in the voice
-        index: 15
+        index: 14
+        regular:
+        warn:
         input method: input
         select:
           - "%": 0
       - name: HNR
         description: Two measures of ratio of noise to tonal components in the voice
-        index: 16
+        index: 15
+        regular:
+        warn:
         input method: input
         select:
           - "%": 0
       - name: RPDE
         description: Two nonlinear dynamical complexity measures
-        index: 17
+        index: 16
+        regular:
+        warn:
         input method: input
         select:
           - bits: 0
       - name: DFA
         description: Signal fractal scaling exponent
-        index: 18
+        index: 17
+        regular:
+        warn:
         input method: input
         select:
           - "α": 0
-      - name: spread1
+      - name: Spread1
         description: Three nonlinear measures of fundamental frequency variation
-        index: 19
+        index: 18
+        regular:
+        warn:
         input method: input
         select:
           - Hz: 0
-      - name: spread2
+      - name: Spread2
         description: Three nonlinear measures of fundamental frequency variation
-        index: 20
+        index: 19
+        regular:
+        warn:
         input method: input
         select:
           - Hz: 0
       - name: D2
         description: Two nonlinear dynamical complexity measures
-        index: 21
+        index: 20
+        regular:
+        warn:
         input method: input
         select:
           - bits: 0
       - name: PPE
         description: Three nonlinear measures of fundamental frequency variation
-        index: 22
+        index: 21
+        regular:
+        warn:
         input method: input
         select:
           - Hz: 0
     output:
-      description: status Health status of the subject
+      description: Status Health status of the subject
       result:
-        - 0: healthy
+        - 0: Healthy
         - 1: Parkinson's

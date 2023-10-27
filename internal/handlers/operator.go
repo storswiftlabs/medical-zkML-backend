@@ -53,13 +53,14 @@ func (o *Operator) DiseasePrediction(premise *m.PredictionPremise) {
 	// Write this prediction to the database in the start state
 	zap.L().Info(fmt.Sprintf("%s started information record", premise.User))
 	recordPrediction := &m.RecordPrediction{
-		User:    premise.User,
-		Status:  m.Start,
-		Disease: premise.Name,
-		Module:  premise.Module,
-		Inputs:  utils.CoverInput(premise),
-		EndTime: time.Now().Add(3 * time.Minute).Unix(),
-		Output:  -1,
+		User:      premise.User,
+		Status:    m.Start,
+		Disease:   premise.Name,
+		Module:    premise.Module,
+		Inputs:    utils.CoverInput(premise),
+		StartTime: time.Now().Unix(),
+		EndTime:   time.Now().Add(3 * time.Minute).Unix(),
+		Output:    -1,
 	}
 	if err := db.RecordPredict(recordPrediction); err != nil {
 		zap.L().Error(fmt.Sprintf("%s information record failed", premise.User), zap.Error(err))
@@ -68,7 +69,7 @@ func (o *Operator) DiseasePrediction(premise *m.PredictionPremise) {
 
 	params := make([]string, len(premise.Inputs))
 	for _, input := range premise.Inputs {
-		params[input.Index] = input.Select
+		params[input.Index] = input.SelectValue
 	}
 	zap.L().Info(fmt.Sprintf("%s disease information %v", premise.User, params))
 
@@ -110,7 +111,7 @@ func (o *Operator) DiseasePrediction(premise *m.PredictionPremise) {
 	recordPrediction.Status = m.QuantizedSuccess
 	recordPrediction.Scale = quantized.Scale
 	recordPrediction.ZeroPoint = quantized.ZeroPoint
-	recordPrediction.Normalized = utils.StringList2String(quantized.Data)
+	recordPrediction.Quantized = utils.StringList2String(quantized.Data)
 	if err := db.RecordPredict(recordPrediction); err != nil {
 		zap.L().Error(fmt.Sprintf("Data storage failure: %s", err.Error()))
 		return
@@ -141,7 +142,7 @@ func (o *Operator) VerifyInformation(req *m.VerifyReq) (*m.VerifyResultNoModel, 
 	if err != nil {
 		return nil, err
 	}
-	result.ContractAddress = config.GetConfig().Sub("contract").Sub(fmt.Sprintf("%s+%s", result.Module, strings.ReplaceAll(result.Disease, " ", "_"))).Get("address").(string)
+	result.ContractAddress = config.GetConfig().Sub("contract").Sub(fmt.Sprintf("%s+%s", strings.ReplaceAll(result.Module, " ", "_"), strings.ReplaceAll(result.Disease, " ", "_"))).Get("address").(string)
 	result.ContractFunction = "verify"
 	data, err := os.ReadFile(fmt.Sprintf("internal/plugin/abi/%s/%s.json", result.Module, strings.ReplaceAll(result.Disease, " ", "_")))
 	if err != nil {

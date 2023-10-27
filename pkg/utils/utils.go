@@ -1,7 +1,7 @@
 package utils
 
 import (
-	"fmt"
+	"encoding/json"
 	"math/big"
 	m "medical-zkml-backend/internal/module"
 	"strings"
@@ -24,9 +24,19 @@ func String2StringList(data string) []string {
 
 func CoverInput(premise *m.PredictionPremise) string {
 	inputs := premise.Inputs
-	var coverInput []string
-	for _, input := range inputs {
-		coverInput = append(coverInput, fmt.Sprintf("%s:%s", input.Name, input.Select))
+
+	type record struct {
+		Key   string `json:"key"`
+		Value string `json:"value"`
 	}
-	return StringList2String(coverInput)
+	var records []record
+	//var coverInput []string
+	for _, input := range inputs {
+		records = append(records, record{
+			Key:   input.Name,
+			Value: input.SelectKey,
+		})
+	}
+	jsonBytes, _ := json.Marshal(records)
+	return string(jsonBytes)
 }
