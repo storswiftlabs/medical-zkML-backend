@@ -8,19 +8,19 @@ database:
 ```yaml
 database:
   mysql:
-    driverName:
-    host:
-    port:
-    user:
-    password:
-    schema:
-    database:
+    driverName: 'mysql'
+    host: 'localhost'
+    port: '3306'
+    user: 'root'
+    password: 'example'
+    schema: 
+    database: 'medical-zkML'
 ```
 ipfs:
 ```yaml
 ipfs:
-  url:
-  auth:
+  url: https://api.nft.storage/upload
+  auth: 'ipfs.auth'
 ```
 
 contract:       
