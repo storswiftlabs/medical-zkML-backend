@@ -2,7 +2,23 @@
 
 This repository contains all code for the medical zkML backend.
 
-## Quick Start
+## Getting started
+Get the code
+```shell
+git clone https://github.com/storswiftlabs/medical-zkML-backend.git
+```
+
+Server startup instructions
+```shell
+cd medical-zkML-backend
+make build
+```
+
+Introducing the required libraries for Python
+```shell
+pip install -r requirements.txt
+```
+
 Configure database connections, IPFS information, and contract addresses in the configuration file.
 database:
 ```yaml
@@ -72,13 +88,7 @@ contract:
     address:
 ```
 
-Introducing the required libraries for Python
-```shell
-pip install -r requirements.txt
-```
-
 Start Service
 ```shell
-make build
 bash medical &
 ```
