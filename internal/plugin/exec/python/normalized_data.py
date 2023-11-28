@@ -11,18 +11,18 @@ def str_to_float(data):
 
 parser = argparse.ArgumentParser()
 
-# 添加参数
-parser.add_argument('params', nargs='+', help='参数列表')
 
-# 解析参数
+parser.add_argument('params', nargs='+', help='parameter list')
+
+
 args = parser.parse_args()
 
-# 访问参数数组
+
 disease = args.params[0]
 disease = disease.replace(" ", "_")
 params = args.params[1:]
 params = str_to_float(params)
-# print(params)
+
 
 with open(f'{os.getcwd()}/internal/plugin/exec/python/column_uniformization_info/{disease}.tsv', 'r') as f:
     lines = f.readlines()
@@ -36,13 +36,11 @@ for index in range(0, len(params)):
     if params[index] > max[index]:
         params[index] = max[index]
 
-# print(max)
-# print(min)
 
 result = []
 
 for index in range(0, len(params)):
-    # 小于0， 设置为0， 大于1， 设置为1
+    # Less than 0, set to 0, greater than 1, set to 1
     molecule = params[index] - min[index]
     if molecule == 0:
         result.append(0)

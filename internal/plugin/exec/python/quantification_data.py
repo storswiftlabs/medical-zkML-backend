@@ -84,16 +84,16 @@ def str_to_float(data):
     return nums
 
 
-# 创建 ArgumentParser 对象
+
 parser = argparse.ArgumentParser()
 
-# 添加参数
-parser.add_argument('params', nargs='+', help='参数列表')
 
-# 解析参数
+parser.add_argument('params', nargs='+', help='parameter list')
+
+
 args = parser.parse_args()
 
-# 访问参数数组
+
 disease = args.params[0]
 disease = disease.replace(" ", "_")
 params = args.params[1:]
@@ -103,17 +103,12 @@ x = [float(x) for x in params]
 
 _type = "uint8"
 
-# scale_molecule, scale_denominator = calc_scale(x, _type)
-# scale = math.ceil(scale_molecule / scale_denominator)
-# _zero_point = calc_zero_point(x, scale, _type)
-
 with open(f'{os.getcwd()}/internal/plugin/exec/python/column_uniformization_info/{disease}.tsv', 'r') as f:
     lines = f.readlines()
 
 scale = int(lines[2].strip().split(' ')[0])
 _zero_point = int(lines[2].strip().split(' ')[1])
 
-# 输出参数
 print("quantized: ", quantize(x, scale, _zero_point, _type))
 print("scale: ", scale)
 print("zero_point: ", _zero_point)
