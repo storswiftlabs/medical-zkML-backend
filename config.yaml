@@ -49,12 +49,8 @@ contract:
     address:
   Decision_tree+Lymphography:
     address:
-  #  Decision_tree+Liver_Disorders:
-  #    address: 0x4FC6c18f90C3263e94166dDe759fE79292d036De
   Decision_tree+Parkinsons:
     address:
-  #  Decision_tree+Primary_Tumor:
-  #    address: 0x8cA44Eb29EE5cE881537cD6D436520d2828371e9
   K_Means+Acute_Inflammations:
     address:
   K_Means+Breast_Cancer:
